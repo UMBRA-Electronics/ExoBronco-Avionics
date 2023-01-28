@@ -28,6 +28,17 @@ class BroncoStack:
             'RADIO':False,
             'SD':False,
             }
+
+        # Define dictionary with all burn ports 
+        self.BurnPorts = {
+            'PORT1': False,
+            'PORT2': False,
+            'PORT3': False,
+            'PORT4': False,
+            'PORT5': False,
+            'PORT6': False,
+        }
+        
         #Define I2C bus
         self.i2c = busio.I2C(board.IO9, board.IO8)
 
@@ -53,7 +64,7 @@ class BroncoStack:
         #Define Vbatt (Find Pin and Define it)
         self.Vbat = AnalogIn(board.IO15)
 
-        self.Avionics_State = 'nomral'
+        self.Avionics_State = 'Commissioning'
         
         self.last_val = 0xFFFF
 
@@ -171,33 +182,62 @@ class BroncoStack:
         if self.hardware['IMU2']:
             return self.IMU2.magnetic
 
-
+# takes in str message as input and send it over radio
     def radio_send(self,message):
         if self.hardware['RADIO']:
             self.rfm9x.send(bytes(str(message),"utf-8"))
             return
-
+# receieves radio message and returns packet(needs update to output string instead of packet data)
     def radio_recive(self):
         if self.hardware['RADIO']:
             self.packet = self.rfm9x.receive()
             return self.packet
-    
+
+# takes in data in str form and writes it to file on sd card called logile
     def SD_Write(self,data):
         with open(self.logfile, "w") as f:
             self.t = int(time.monotonic())
             f.write('{},{}\n'.format(self.t,data))
-    
+
+# reads line from logfile file on sdcard
     def SD_Read(self):
         with open(self.logfile, "r") as f:
             print("Read line from file:")
             print(f.readline(), end='')
 
-            
+# takes in state and sets Avionics_state to input state  (needs to update to include more states)          
     def avionicstate(self,state):
-        if 'PAD' in state:
-            self.Avionics_State = 'PAD'
-        if 'FLIGHT' in state:
-            self.Avionics_State = 'FLIGHT'
+        if 'Commissioning' in state:
+            self.Avionics_State = 'Commissioning'
+        if 'On Pad' in state:
+            self.Avionics_State = 'On Pad'
+        if 'Motor1Burn' in state:
+            self.Avionics_State = 'Motor1Burn'
+        if 'Coast1' in state:
+            self.Avionics_State = 'Coast1'
+        if 'Motor2Burn' in state:
+            self.Avionics_State = 'Motor2Burn'
+        if 'Motor2ignition' in state:
+            self.Avionics_State = 'Motor2ignition'
+        if 'Coast2' in state:
+            self.Avionics_State = 'Coast2'
+        if 'Drougedeploy' in state:
+            self.Avionics_State = 'Drougedeploy'
+        if 'Maindeploy' in state:
+            self.Avionics_State = 'Maindeploy'
+        if 'Landed' in state:
+            self.Avionics_State = 'Landed'
+            
+        
+
+# takes in burn port and activates inputed burn port (function needs to be actually written also needs to figure out timing for FETS )
+    def activateburn(self,port):
+        self.BurnPorts[port] = True
+        return
+
+
+
+    
     
 
 
