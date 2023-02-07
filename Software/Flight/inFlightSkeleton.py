@@ -1,6 +1,6 @@
 import inFlightCore1 as Flight
 import time
-import Pancake
+from Pancake import pancake
 
 # Placeholder variables/methods
 
