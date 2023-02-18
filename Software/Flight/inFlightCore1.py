@@ -1,4 +1,4 @@
-import Pancake
+from Pancake import pancake
 import time
 
 # Placeholder variables/methods
@@ -12,9 +12,6 @@ establish_new_flight_record: None
 # errors inside that function, so I shouldn't raise any exceptions in this file
 # This function should also relay whatever exception was thrown to the groundstation
 system_verification_checks: None
-
-# Updates status variable
-update_status_variable: None
 
 # Method which starts all L0 tasks
 start_L0_tasks: None
@@ -91,7 +88,7 @@ def commissioning():
 
 def on_pad():
     # Updates status variables
-    update_status_variable
+    pancake.avionic_state("OnPad")
 
     # Starts the L0 tasks
     start_L0_tasks
@@ -109,7 +106,7 @@ def on_pad():
 
 def motor_1_burn():
     # Updates status variables
-    update_status_variable
+    pancake.avionic_state("Motor1Burn")
 
     # Constantly writes to memory and groundstation until
     # this phase ends when its acceleration goes below 0
@@ -123,7 +120,7 @@ def motor_1_burn():
 
 def coast_1():
     # Updates status variable
-    update_status_variable
+    pancake.avionic_state("Coast1")
 
     # Stores time from RTC?
     air_time
@@ -159,7 +156,7 @@ def motor_2_ignition():
 
 def motor_2_burn():
     # updates status variable
-    update_status_variable
+    pancake.avionic_state("Motor2Burn")
 
     # Writes to memory and groundstation until acceleration
     # drops below 0
@@ -173,7 +170,7 @@ def motor_2_burn():
 
 def coast_2():
     # Updates status variable
-    update_status_variable
+    pancake.avionic_state("Coast2")
 
     # Writes to memory and groundstation until velocity drops
     # below 0
@@ -212,7 +209,7 @@ def drogue_deployment():
 
     if rocket_acceleration == estimated_acceleration and counter < 3:
         # Updates status variable
-        update_status_variable
+        pancake.avionic_state("DrogueDeploy")
 
         # Writes to memory and groundstation until altitude is
         # below 12.5k ft
@@ -250,7 +247,7 @@ def main_deployment():
             time.sleep(0.25)
 
     # Updates status variable
-    update_status_variable
+    pancake.avionic_state("MainDeploy")
 
     while True:
         write_to_memory
@@ -263,7 +260,7 @@ def main_deployment():
 
 def landed():
     # Updates status variable
-    update_status_variable
+    pancake.avionic_state("Landed")
 
     # Transfers memory to SD Card
     transfer_memory
