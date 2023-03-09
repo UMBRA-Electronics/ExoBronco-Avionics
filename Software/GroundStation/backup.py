@@ -1,3 +1,6 @@
+import csv
+import time
+
 #Variable Initalization
 #Boolean Values
 onPad = "n/a"
@@ -27,7 +30,7 @@ acceleration = "n/a"
 altitude = "n/a"
 latitude = "n/a"
 longitude = "n/a"
-stellites = "n/a" 
+satellites = "n/a" 
 pressure1 = "n/a" #Beginning of Flight Stage Values
 pressure2 = "n/a"
 tempB1 = "n/a"
@@ -77,7 +80,7 @@ floatList = [rocketState,
              altitude,
              latitude,
              longitude,
-             stellites, 
+             satellites, 
              pressure1,
              pressure2,
              tempB1,
@@ -100,3 +103,28 @@ floatList = [rocketState,
              pitch,
              roll,
              vbatt]
+
+rows = [booleanList,floatList]
+
+for i in range(len(booleanList)):
+    booleanList[i] = i + 0
+
+for i in range(len(floatList)):
+    floatList[i] = i + 0
+    
+#PC with open(r"C:\Users\User\Desktop\ExoBronco-Avionics\Software\GroundStation\database.csv", 'w') as f:
+
+while (True): 
+    #USE FOR PC 
+    with open(r"C:\Users\User\Desktop\ExoBronco-Avionics\Software\GroundStation\database.csv", 'w') as f:
+    #USE FOR LAPTOP
+    #with open(r"C:\Users\oldri\Desktop\BRONCOPROJECT\ExoBronco-Avionics\Software\GroundStation\database.csv", 'w') as f:
+    
+        write = csv.writer(f)
+        write.writerows(rows)
+        f.close()
+        for i in range(len(booleanList)):
+            booleanList[i] += 1
+        
+        #Updated code Will go here
+        time.sleep(1)

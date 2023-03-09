@@ -1,0 +1,26 @@
+body {
+  background-color: #0b0917;
+  background-size: cover;
+  margin: auto;
+}
+
+h1 {
+  color: #B789C4;
+  text-align: center;
+}
+
+.ImportantInfoBox {
+  height: 15rem;
+  width: 50%;
+  border: 3px solid #4d4967;
+  background-color: #4d4967;
+}
+
+.SecondRow {
+  display: flex;
+  flex-direction: row;
+}
+
+
+
+
