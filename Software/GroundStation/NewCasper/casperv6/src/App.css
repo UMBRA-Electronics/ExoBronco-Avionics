@@ -7,20 +7,114 @@ body {
 h1 {
   color: #B789C4;
   text-align: center;
+  font-size: 69px;
 }
 
-.ImportantInfoBox {
-  height: 15rem;
+.second-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.important-info-box {
+  height: 17rem;
   width: 50%;
   border: 3px solid #4d4967;
   background-color: #4d4967;
 }
 
-.SecondRow {
+.states-container{
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
+.states-container div{
+  font-size: 50px;  
+  border: 1px solid #B789C4;
+  background-color: #B789C4;
+  border-radius: 50%;
+  color: white;
+  height: 70px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid;
+  border-color: var(--line-border-empty);
+  transition: .4s ease;
+  margin-right: 100px;
+  margin-top: 5px;
+}
 
+.kinematic-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
+#velocity {
+  font-size: 69px;
+  margin-right: 200px;
+}
 
+#acceleration {
+  --p: 69;
+  --b: 10px;
+  --c: purple;
+}
+
+@property --p{
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.pie {
+  --p:20;
+  --b:22px;
+  --c:darkred;
+  --w:150px;
+  
+  width:var(--w);
+  aspect-ratio:1;
+  position:relative;
+  display:inline-grid;
+  margin:5px;
+  place-content:center;
+  font-size:25px;
+  font-weight:bold;
+  font-family:sans-serif;
+}
+.pie:before,
+.pie:after {
+  content:"";
+  position:absolute;
+  border-radius:50%;
+}
+.pie:before {
+  inset:0;
+  background:
+    radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+    conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+  -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+          mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.pie:after {
+  inset:calc(50% - var(--b)/2);
+  background:var(--c);
+  transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+.animate {
+  animation:p 1s .5s both;
+}
+.no-round:before {
+  background-size:0 0,auto;
+}
+.no-round:after {
+  content:none;
+}
+@keyframes p {
+  from{--p:0}
+}
