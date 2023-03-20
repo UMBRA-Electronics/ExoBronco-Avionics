@@ -13,12 +13,15 @@ function App() {
       <div className="second-row">
         <img src="https://www.freeiconspng.com/thumbs/rocket-ship-png/rocket-ship-png-7.png" alt="Rocket Ship" id = "rocketshipimage"></img>
         <div className="important-info-box">
-          <div className="states-container">
-              <div className ="circle active">1</div>
+          <div className = "container">
+            <div className="progress-container">
+              <div class="progress" id="progress"></div>
+              <div className ="circle">1</div>
               <div className ="circle">2</div>
               <div className ="circle">3</div>
               <div className ="circle">4</div>
-              <div className ="circle">5</div>
+              <div className ="circle active">5</div>
+            </div>
           </div>
           <div className = "pie-container">
             <div className="velocity-container">
@@ -48,9 +51,33 @@ function App() {
           </div>
         </div>
         <div className="line-values">
-          <div className="RSSI-container">
-            <div id="RSSI">RSSI</div>
+          <div className="line-container">
+            <div class="line-title">RSSI</div>
             <div className="line"></div>
+            <div className="point"></div>
+            <div className="line-outline"></div>
+            <div className="line-output">69Nice</div>
+          </div>
+          <div className="line-container">
+            <div class="line-title">TEMP 1</div>
+            <div className="line"></div>
+            <div className="point"></div>
+            <div className="line-outline"></div>
+            <div className="line-output">420Nice</div>
+          </div>
+          <div className="line-container">
+            <div class="line-title">TEMP 2</div>
+            <div className="line"></div>
+            <div className="point"></div>
+            <div className="line-outline"></div>
+            <div className="line-output">420Nice</div>
+          </div>
+          <div className="line-container">
+            <div class="line-title">VBATT</div>
+            <div className="line"></div>
+            <div className="point"></div>
+            <div className="line-outline"></div>
+            <div className="line-output">420Nice</div>
           </div>
         </div>
       </div>

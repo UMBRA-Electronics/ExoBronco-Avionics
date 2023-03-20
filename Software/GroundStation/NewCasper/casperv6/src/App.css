@@ -36,30 +36,64 @@ body {
   background-color: #4d4967;
 }
 
-.states-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 35px;
+.container{
+  text-align: center;
 }
 
-.states-container div{
-  font-size: 50px;  
-  border: 1px solid #B789C4;
+.progress-container{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 30px;
+  max-width: 100%;
+  width: 900px;
+
+}
+
+.progress-container::before {
+  content:'';/*Always needed for ::before containers*/
   background-color: #B789C4;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 4px;
+  width: 0%;
+  z-index: -1;
+
+}
+
+.progress {
+  background-color: #B789C4;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 4px;
+  width: 50%;
+  z-index: 0;
+  transition: .4s ease;
+
+}
+
+.circle {
+  background-color: white;
+  color: #999;
   border-radius: 50%;
-  color: white;
-  height: 70px;
-  width: 70px;
+  height: 30px;
+  width: 30px;
+  /*/ The next three lines create a centering among us the numbers and circles /*/
   display: flex;
   align-items: center;
   justify-content: center;
   border: 3px solid;
-  border-color: var(--line-border-empty);
+  border-color: #B789C4;
   transition: .4s ease;
-  margin-right: 100px;
-  margin-top: 5px;
+  z-index: 1;
+}
+
+.circle.active{
+  border-color: blue;
 }
 
 .pie-container{
@@ -158,24 +192,56 @@ body {
   from{--p:0}
 }
 
+.line-container{
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  line-height: 0;
+}
+
 .line-values {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.line-title {
+  font-size: 20px;
+  width:200px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
 }
 
 .line {
-  background-color: var(--line-border-fill);
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  height: 4px;
-  width: 100%;
-  z-index: -1;
+  background-color: red;
+  height: 5px;
+  width: 80%;
+  z-index: 0;
   transition: .4s ease;
-
+  border-radius: 20%;
 }
 
-#RSSI {
+.point {
+  border-radius: 50%;
+  height: 10  px;
+  width: 15px;
+  background-color: white;
+  border-color: #0b0917;
+  line-height: 0;
+}
+
+.line-outline {
+  background-color: #4d4967;
+  height: 5px;
+  width: 20%;
+  z-index: 0;
+  transition: .4s ease;
+  border-radius: 20%;
+}
+
+.line-output{
+  margin-left: 10px;
   color: white;
 }
+
