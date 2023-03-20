@@ -29,8 +29,9 @@ body {
   justify-content: center;
 }
 
+
 .important-info-box {
-  height: 19rem;
+  height: 16rem;
   width: 50%;
   border: 3px solid #4d4967;
   background-color: #4d4967;
@@ -245,3 +246,30 @@ body {
   color: white;
 }
 
+.bottom-half {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+}
+.pyro-channels {
+  display: flex;
+  flex-direction: column;
+}
+
+.pyro-channel {
+  display: flex;
+  flex-direction: row;
+}
+.pyro-bubble {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #7dc248;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.pyro-title {
+  margin-left: 10px;
+  color: white;
+}
