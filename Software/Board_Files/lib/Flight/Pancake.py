@@ -41,7 +41,7 @@ class BroncoStack:
         }
 
         # Define I2C bus
-        self.i2c = busio.I2C(board.IO9, board.IO8)
+        self.i2c = busio.I2C(board.IO8, board.IO9)
 
         # Define Uart
         self.UART1 = busio.UART(board.TX, board.RX, baudrate=9600)
@@ -299,3 +299,4 @@ class BroncoStack:
 
 
 pancake = BroncoStack()
+print("Finished")
