@@ -13,6 +13,7 @@ import storage
 import adafruit_rfm9x
 import adafruit_sdcard
 import adafruit_bmp3xx
+import adxl
 
 
 class BroncoStack:
@@ -70,38 +71,41 @@ class BroncoStack:
 
         # Init accel1
         try:
+            print("acceleration1 started checking")
             self.ACCEL1 = adafruit_adxl37x.ADXL375(self.i2c, 0x1d)
+            print("acceleration1 finished checking")
             self.hardware['ACCEL1'] = True
+
         except Exception as e:
-            self.debug: print("ERROR Accelerometer 1", e)
+            print("ERROR Accelerometer 1", e)
 
         # Init IMU1
         try:
             self.IMU1 = adafruit_bno055.BNO055_I2C(self.i2c)
             self.hardware['IMU1'] = True
         except Exception as e:
-            self.debug: print("ERROR IMU1", e)
+            print("ERROR IMU1", e)
 
         # Init IMU2
         try:
             self.IMU2 = adafruit_bno055.BNO055_I2C(self.i2c, 0x29)
             self.hardware['IMU2'] = True
         except Exception as e:
-            self.debug: print("ERROR IMU2", e)
+            print("ERROR IMU2", e)
 
         # Init accel2
         try:
             self.ACCEL2 = adafruit_lis331.H3LIS331(self.i2c, 0x19)
             self.hardware['ACCEL2'] = True
         except Exception as e:
-            self.debug: print("ERROR Accelerometer 2", e)
+            print("ERROR Accelerometer 2", e)
 
         # Init baro1
         try:
             self.BARO1 = MS8607(self.i2c)
             self.hardware['BARO1'] = True
         except Exception as e:
-            self.debug: print("ERROR barometer 1", e)
+            print("ERROR barometer 1", e)
 
         # Init baro2
         try:
@@ -110,7 +114,7 @@ class BroncoStack:
             self.BARO2.temperature_oversampling = 2
             self.hardware['BARO2'] = True
         except Exception as e:
-            self.debug: print("ERROR barometer 2", e)
+            print("ERROR barometer 2", e)
 
         # Init Radio
         try:
@@ -118,7 +122,7 @@ class BroncoStack:
             self.rfm9x.tx_power = 23
             self.hardware['RADIO'] = True
         except Exception as e:
-            self.debug: print("ERROR Radio", e)
+            print("ERROR Radio", e)
 
         # Init SD_Card
         try:
@@ -129,7 +133,7 @@ class BroncoStack:
             self.logfile = "/sd/log.txt"
             self.hardware['SD'] = True
         except Exception as e:
-            self.debug: print("ERROR barometer 1", e)
+            print("ERROR barometer 1", e)
 
     def pressure_B1(self):
         """
@@ -299,4 +303,3 @@ class BroncoStack:
 
 
 pancake = BroncoStack()
-print("Finished")
