@@ -13,7 +13,6 @@ import storage
 import adafruit_rfm9x
 import adafruit_sdcard
 import adafruit_bmp3xx
-import adxl
 
 
 class BroncoStack:
