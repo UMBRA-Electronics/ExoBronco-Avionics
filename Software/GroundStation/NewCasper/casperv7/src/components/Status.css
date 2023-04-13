@@ -1,0 +1,32 @@
+.status {
+    display: flex;
+    flex-direction: row;
+}
+
+#checkmark{
+    background-color: #40c110;
+    text-align: center;
+    position: relative;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right:3%;
+    height: 1.5em;
+    width: 1.5em;
+    font-weight: bold;
+}
+
+h1 {
+    color: white;
+    font-size: 80%;
+    margin-top: 0;
+    margin-bottom: 10%;
+}
+
+h2 {
+    font-size: 75%;
+    margin-top: 5%;
+    color:#8992c5;
+    margin-bottom: 0;
+}

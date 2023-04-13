@@ -1,15 +1,17 @@
 html,body {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  max-width: 100vw;
+  width: 100vw;
   padding: 0;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-image: linear-gradient(0deg,#1761cf 0%,#101754 50%, rgba(0,0,0,1) 100%);
+  background-image: linear-gradient(0deg,#1342d3 0%,#101754 60%, rgba(0,0,0,1) 100%);
   margin-bottom: 1%;
 }
 
 .App {
-  height: 100%;
+  height: 95vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -18,31 +20,45 @@ html,body {
 
 .first-column {
   height: 100%;
-  width: 100%;
-  background-color: aquamarine;
-  margin-left: 1%;
+  width: 30%;
+  margin-left: 3%;
   margin-top: 1%;
   margin-bottom: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .second-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   height: 100%;
   width: 100%;
-  background-color: red;
   text-align: center;
   margin-top: 1%;
   margin-bottom: 1%;
 }
 
-.third-column {
-  height: 100%;
-  width: 100%;
-  background-color: yellow;
-  margin-top: 1%;
-  margin-right: 1%;
-  margin-bottom: 1%;
-}
-
 #title {
   color:white;
+  font-size: 25px;
+}
+
+#timer-title {
+  color: white;
+  font-size: 25px;
+}
+
+.third-column {
+  height: 100%;
+  width: 30%;
+  display: flex;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 1%;
+}
+
+#casper-image {
+  text-shadow: 2px 2px;
 }
