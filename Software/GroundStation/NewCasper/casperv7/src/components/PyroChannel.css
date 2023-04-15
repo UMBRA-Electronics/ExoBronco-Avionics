@@ -1,0 +1,22 @@
+.pyro{
+    display: flex;
+    flex-direction: row;
+    color: white;
+}
+
+#channel{
+    margin-right: 1%;
+}
+
+#number{
+    margin-right: 5%;
+}
+
+#emblem{
+    width: 5%;
+    margin-right: 5%;
+}
+
+#status{
+    font-weight: bold;
+}

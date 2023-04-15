@@ -1,9 +1,8 @@
 import './App.css';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 import Timer from './components/Timer.jsx'
 import Status from './components/Status.jsx'
-import Line from './components/Line.jsx'
-import BasicExample from './components/Line.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import PyroChannel from './components/PyroChannel.jsx';
 
 function App() {
   return (
@@ -26,12 +25,34 @@ function App() {
           <div id="timer-title">Mission Elapsed Timer</div>
           <Timer id="timer" hours="00" minute="00" seconds="00"></Timer>
         </div>
-        <div className="body">Hey lol</div>
-        <div className="foot">
-          <div className='lines'>
-            <BasicExample></BasicExample>
+        <div className="body">
+          <div className="body-first-row">
+            <Dashboard value={2.69} max={20} color="green" type="VELOCITY" units="ft/s" width={175}></Dashboard>
+            <Dashboard value={30} max={40} color="orange" type="ACCELERATION" units="ft/s^2" width={175}></Dashboard>
+            <Dashboard value={14.00} max={40} color="red" type="ALTITUDE" units="ft" width={175}></Dashboard>
+            <Dashboard value={.07} max={.5} color="cyan" type="Pressure" units="psi" width={175}></Dashboard>
           </div>
-          <div className ='connections'>Connections</div>
+          <div className="body-second-row">
+            <Dashboard value={26.53} max={50} color="cyan" type="PITCH" units="Degrees" width={150}></Dashboard>
+            <Dashboard value={20} max={50} color="cyan" type="YAW" units="Degrees" width={150}></Dashboard>
+            <Dashboard value={0} max={40} color="cyan" type="PITCH GYRO" units="Degrees/s" width={150}></Dashboard>
+            <Dashboard value={.07} max={.5} color="cyan" type="ALTITUDE" units="Degrees/s" width={150}></Dashboard>
+          </div>
+        </div>
+        <div className="foot">
+          <div className='lines-container'>
+            <div>Lines</div>
+          </div>
+          <div className ='connections-container'>
+            <div id="connections">Connections</div>
+            <hr id="line"></hr>
+            <div className="pyro-container">
+              <PyroChannel number='1' status="Connected"></PyroChannel>
+              <PyroChannel number='2' status="Connected"></PyroChannel>
+              <PyroChannel number='3' status="Connected"></PyroChannel>
+              <PyroChannel number='4' status="Connected"></PyroChannel>
+            </div>
+          </div>
         </div>
       </div>
       <div className="third-column">

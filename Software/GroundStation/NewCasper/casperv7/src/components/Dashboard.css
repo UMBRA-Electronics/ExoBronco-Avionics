@@ -1,0 +1,23 @@
+.title{
+    margin-top:-80%;
+    margin-bottom: 16%;
+}
+
+#type{
+    color: white;
+}
+
+#value{
+    color: #ffffff;
+    font-size: 2.5em;
+}
+
+#units{
+    color: white;
+}
+
+.dashboard{
+    background: rgba(14,16,28,.4);
+    padding: 1%;
+}
+
