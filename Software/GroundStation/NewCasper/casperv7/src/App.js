@@ -1,7 +1,9 @@
 import './App.css';
-import { useState } from 'react';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import Timer from './components/Timer.jsx'
 import Status from './components/Status.jsx'
+import Line from './components/Line.jsx'
+import BasicExample from './components/Line.jsx';
 
 function App() {
   return (
@@ -16,12 +18,21 @@ function App() {
         <Status name="COAST 2" status="Normal"></Status>
         <Status name="DROGUE DEPLOYMENT" status="Waiting"></Status>
         <Status name="MAIN DEPLOYMENT" status="Waiting"></Status>
-        <Status name="Landed" status="Waiting"></Status>
+        <Status name="LANDED" status="Waiting"></Status>
       </div>
       <div className="second-column">
-        <div id="title">Casper Vehicle Launch</div>
-        <div id="timer-title">Mission Elapsed Timer</div>
-        <Timer id="timer" hours="00" minute="00" seconds="00"></Timer>
+        <div className="header">
+          <div id="title">Casper Vehicle Launch</div>
+          <div id="timer-title">Mission Elapsed Timer</div>
+          <Timer id="timer" hours="00" minute="00" seconds="00"></Timer>
+        </div>
+        <div className="body">Hey lol</div>
+        <div className="foot">
+          <div className='lines'>
+            <BasicExample></BasicExample>
+          </div>
+          <div className ='connections'>Connections</div>
+        </div>
       </div>
       <div className="third-column">
         <img id="casper-image" src= {require('./images/rocketBeta.png')} alt="Error: failed to load"/>
