@@ -3,6 +3,7 @@ import Timer from './components/Timer.jsx'
 import Status from './components/Status.jsx'
 import Dashboard from './components/Dashboard.jsx';
 import PyroChannel from './components/PyroChannel.jsx';
+import ProgressBar from './components/ProgressBar.jsx';
 
 function App() {
   return (
@@ -27,25 +28,27 @@ function App() {
         </div>
         <div className="body">
           <div className="body-first-row">
-            <Dashboard value={2.69} max={20} color="green" type="VELOCITY" units="ft/s" width={175}></Dashboard>
-            <Dashboard value={30} max={40} color="orange" type="ACCELERATION" units="ft/s^2" width={175}></Dashboard>
-            <Dashboard value={14.00} max={40} color="red" type="ALTITUDE" units="ft" width={175}></Dashboard>
-            <Dashboard value={.07} max={.5} color="cyan" type="Pressure" units="psi" width={175}></Dashboard>
+            <Dashboard value={2.69} max={20} color="green" type="VELOCITY" units="ft/s" width={150} class="dashboard"></Dashboard>
+            <Dashboard value={30} max={40} color="orange" type="ACCELERATION" units="ft/s^2" width={150}></Dashboard>
+            <Dashboard value={14.00} max={40} color="red" type="ALTITUDE" units="ft" width={150}></Dashboard>
+            <Dashboard value={.07} max={.5} color="cyan" type="Pressure" units="psi" width={150}></Dashboard>
           </div>
           <div className="body-second-row">
-            <Dashboard value={26.53} max={50} color="cyan" type="PITCH" units="Degrees" width={150}></Dashboard>
-            <Dashboard value={20} max={50} color="cyan" type="YAW" units="Degrees" width={150}></Dashboard>
-            <Dashboard value={0} max={40} color="cyan" type="PITCH GYRO" units="Degrees/s" width={150}></Dashboard>
-            <Dashboard value={.07} max={.5} color="cyan" type="ALTITUDE" units="Degrees/s" width={150}></Dashboard>
+            <Dashboard value={26.53} max={50} color="cyan" type="PITCH" units="Degrees" width={125}></Dashboard>
+            <Dashboard value={20} max={50} color="cyan" type="YAW" units="Degrees" width={125}></Dashboard>
+            <Dashboard value={0} max={40} color="cyan" type="PITCH GYRO" units="Degrees/s" width={125}></Dashboard>
+            <Dashboard value={.07} max={.5} color="cyan" type="ALTITUDE" units="Degrees/s" width={125}></Dashboard>
           </div>
         </div>
         <div className="foot">
           <div className='lines-container'>
-            <div>Lines</div>
+            <div>Other Info</div>
+            <hr id="lineheader"></hr>
+            <ProgressBar bgcolor="cyan" completed="50"></ProgressBar>
           </div>
           <div className ='connections-container'>
             <div id="connections">Connections</div>
-            <hr id="line"></hr>
+            <hr id="lineheader"></hr>
             <div className="pyro-container">
               <PyroChannel number='1' status="Connected"></PyroChannel>
               <PyroChannel number='2' status="Connected"></PyroChannel>

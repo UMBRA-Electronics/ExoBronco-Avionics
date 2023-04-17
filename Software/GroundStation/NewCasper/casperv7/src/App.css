@@ -85,30 +85,39 @@ html,body {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-top: 5%;
+  margin-top: 2%;
 
 }
 
 .lines-container {
+  background: yellow;
   width: 50%;
+  height: 100%;
 }
 
 #connections{
   color: white;
 }
 
-#line{
+#lineheader{
   margin-left: 10%;
   margin-right: 10%;
 }
 .connections-container{
+  height: 100; 
   width: 50%;
 }
 .pyro-container {
- margin-top: 10%;
- display: flex;
- flex-direction: column;
- justify-content: center;
+  height: 80%;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.dashboard{
+  align-items: center;
 }
 
 
