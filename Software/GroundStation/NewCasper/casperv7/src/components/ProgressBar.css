@@ -1,5 +1,7 @@
 .everything{
     display: flex;
     flex-direction: row;
-    background: red;
+    align-items: center;
+    color: white;
+    font-size: .8em;
 }

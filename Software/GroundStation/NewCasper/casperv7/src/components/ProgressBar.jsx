@@ -2,19 +2,23 @@ import React from "react";
 import './ProgressBar.css';
 
 const ProgressBar = (props) => {
-    const { bgcolor, completed,} = props;
+    const { bgcolor, completed, units, min, max} = props;
+
+    const ratio = Math.abs(max-min);
+    console.log(Math.abs(completed)/ratio);
   
     const containerStyles = {
-      height: '1%',
+      height: 5,
       width: '50%',
       backgroundColor: "#2d4096",
       borderRadius: 50,
-      margin: 50
+      marginLeft: 50,
+      marginRight: 50
     }
   
     const fillerStyles = {
       height: '100%',
-      width: `${completed}%`,
+      width: `${100*Math.abs(completed)/ratio}%`,
       backgroundColor: bgcolor,
       borderRadius: 'inherit',
       textAlign: 'right'
@@ -33,8 +37,7 @@ const ProgressBar = (props) => {
           <span style={labelStyles}></span>
         </div>
       </div>
-      <div id="number">{`${completed}%`}</div>
-      <div id="unit"></div>
+      <div id="number">{`${completed} ${units}`}</div>
       </div>
     );
   };

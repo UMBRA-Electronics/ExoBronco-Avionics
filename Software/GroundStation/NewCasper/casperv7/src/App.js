@@ -42,9 +42,18 @@ function App() {
         </div>
         <div className="foot">
           <div className='lines-container'>
-            <div>Other Info</div>
+            <div id='other-info'>Other Info</div>
             <hr id="lineheader"></hr>
-            <ProgressBar bgcolor="cyan" completed="50"></ProgressBar>
+            <div className='progress-container'>
+              <div className='line-title'>RSSI</div>
+              <ProgressBar bgcolor="cyan" completed={-2} units="dbm" min={-5} max={0}></ProgressBar>
+              <div className='line-title'>BMP390 Temperature</div>
+              <ProgressBar bgcolor="cyan" completed={14.0} units="°F" min={0} max={100}></ProgressBar>
+              <div className='line-title'>MS8607 Temperature</div>
+              <ProgressBar bgcolor="cyan" completed={14.5} units="°F" min={0} max={100}></ProgressBar>
+              <div className='line-title'>VBATT</div>
+              <ProgressBar bgcolor="cyan" completed={14.7} units="V" min={0} max={30}></ProgressBar>
+            </div>
           </div>
           <div className ='connections-container'>
             <div id="connections">Connections</div>

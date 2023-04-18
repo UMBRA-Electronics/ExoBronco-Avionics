@@ -90,23 +90,43 @@ html,body {
 }
 
 .lines-container {
-  background: yellow;
   width: 50%;
   height: 100%;
 }
 
-#connections{
-  color: white;
+.progress-container{
+  height: 80%;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#other-info{
+  color:white;
 }
 
 #lineheader{
   margin-left: 10%;
   margin-right: 10%;
 }
+
+.line-title{
+  color: white;
+  font-size: .8em;
+}
+
+
 .connections-container{
   height: 100; 
   width: 50%;
 }
+
+#connections{
+  color: white;
+}
+
 .pyro-container {
   height: 80%;
   width: 80%;
