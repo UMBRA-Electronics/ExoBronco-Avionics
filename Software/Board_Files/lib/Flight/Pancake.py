@@ -13,6 +13,11 @@ import storage
 import adafruit_rfm9x
 import adafruit_sdcard
 import adafruit_bmp3xx
+import neopixel
+import simpleio
+import adafruit_gps
+import rtc
+
 
 
 class BroncoStack:
@@ -41,10 +46,10 @@ class BroncoStack:
         }
 
         # Define I2C bus
-        self.i2c = busio.I2C(board.IO8, board.IO9)
+        self.i2c = busio.I2C(board.IO9, board.IO8,frequency=30000)
 
         # Define Uart
-        self.UART1 = busio.UART(board.TX, board.RX, baudrate=9600)
+        self.UART1 = busio.UART(board.IO43, board.IO44, baudrate=9600, timeout=10)
 
         # Define SPI for Radio
         self.spi = busio.SPI(board.IO12, MOSI=board.IO13, MISO=board.IO11)
@@ -57,22 +62,42 @@ class BroncoStack:
         # Define CS pin for SDCARD
         self.cs_SD = digitalio.DigitalInOut(board.IO1)
 
-        # Define LED
-        self.led = digitalio.DigitalInOut(board.IO48)
-        self.led.direction = digitalio.Direction.OUTPUT
+        # Define and initilizeNEOPIXEL
+        self.pixels = neopixel.NeoPixel(board.IO15, 1,brightness=0.05)
+
+        #Define Buzzer
+        self.buzzer_Pin = board.IO16
 
         # Define Vbatt (Find Pin and Define it)
-        self.Vbat = AnalogIn(board.IO15)
+        self.Vbat = AnalogIn(board.IO14)
 
         self.Avionics_State = 'Commissioning'
 
         self.last_val = 0xFFFF
 
+        # Define PYRO channel pins
+        self.PYRO1 = digitalio.DigitalInOut(board.IO41)
+        self.PYRO2 = digitalio.DigitalInOut(board.IO40)
+        self.PYRO3 = digitalio.DigitalInOut(board.IO39)
+        self.PYRO4 = digitalio.DigitalInOut(board.IO42)
+
+        self.PYRO1.direction = digitalio.Direction.OUTPUT
+        self.PYRO2.direction = digitalio.Direction.OUTPUT
+        self.PYRO3.direction = digitalio.Direction.OUTPUT
+        self.PYRO4.direction = digitalio.Direction.OUTPUT
+
+        
+
+        # Define continuity channel pins
+        self.CONT1 = AnalogIn(board.IO4)
+        self.CONT2 = AnalogIn(board.IO5)
+        self.CONT3 = AnalogIn(board.IO6)
+        self.CONT4 = AnalogIn(board.IO7)
+        
+
         # Init accel1
         try:
-            print("acceleration1 started checking")
             self.ACCEL1 = adafruit_adxl37x.ADXL375(self.i2c, 0x1d)
-            print("acceleration1 finished checking")
             self.hardware['ACCEL1'] = True
 
         except Exception as e:
@@ -80,7 +105,7 @@ class BroncoStack:
 
         # Init IMU1
         try:
-            self.IMU1 = adafruit_bno055.BNO055_I2C(self.i2c)
+            self.IMU1 = adafruit_bno055.BNO055_I2C(self.i2c,0x28)
             self.hardware['IMU1'] = True
         except Exception as e:
             print("ERROR IMU1", e)
@@ -129,10 +154,23 @@ class BroncoStack:
             self.vfs = storage.VfsFat(self.sdcard)
             storage.mount(self.vfs, "/sd")
             self.fs = self.vfs
-            self.logfile = "/sd/log.txt"
+            self.logfile = "/sd/log.csv"
             self.hardware['SD'] = True
         except Exception as e:
             print("ERROR barometer 1", e)
+        
+        # Init GPS
+        try:
+            
+            self.gps = adafruit_gps.GPS(self.UART1, debug=False)
+            self.gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
+            self.gps.send_command(b"PMTK220,500")
+            rtc.set_time_source(self.gps)
+            self.the_rtc = rtc.RTC()
+            self.hardware['GPS'] = True
+
+        except Exception as e:
+            print("ERROR GPS", e)
 
     def pressure_B1(self):
         """
@@ -221,6 +259,65 @@ class BroncoStack:
         """
         if self.hardware['IMU2']:
             return self.IMU2.magnetic
+    
+    def IMU1_ACCEL(self):
+        """
+        Returns the acceleration readings from IMU1
+        :return: Float
+        """
+        if self.hardware['IMU1']:
+            return self.IMU1.acceleration
+    
+    def IMU2_ACCEL(self):
+        """
+        Returns the acceleration readings from IMU2
+        :return: Float
+        """
+        if self.hardware['IMU2']:
+            return self.IMU2.acceleration
+    
+    def IMU1_LINACCEL(self):
+        """
+        Returns the linear acceleration readings from IMU1
+        :return: Float
+        """
+        if self.hardware['IMU1']:
+            return self.IMU1.linear_acceleration
+    
+    def IMU2_LINACCEL(self):
+        """
+        Returns the linear acceleration readings from IMU1
+        :return: Float
+        """
+        if self.hardware['IMU2']:
+            return self.IMU2.linear_acceleration
+        
+    def IMU1_GRAVITY(self):
+        if self.hardware['IMU1']:
+            return self.IMU1.gravity
+        
+    def IMU2_GRAVITY(self):
+        if self.hardware['IMU2']:
+            return self.IMU2.gravity
+        
+    def IMU1_EULER(self):
+        if self.hardware['IMU1']:
+            return self.IMU1.euler
+        
+    def IMU2_EULER(self):
+        if self.hardware['IMU2']:
+            return self.IMU2.euler
+        
+    def IMU1_QUATERNION(self):
+        if self.hardware['IMU1']:
+            return self.IMU1.quaternion
+        
+    def IMU2_QUATERNION(self):
+        if self.hardware['IMU2']:
+            return self.IMU2.quaternion
+        
+    def VBATT(self):
+        return self.Vbat.value
 
     def radio_send(self, message):
         """
@@ -259,6 +356,87 @@ class BroncoStack:
         with open(self.logfile, "r") as f:
             print("Read line from file:")
             print(f.readline(), end='')
+    
+    def Buzzer(self,tone,pduration):
+        """
+        takes in tone and duration and plays that tone for that duration
+        :return: None
+        """
+        simpleio.tone(self.buzzer_Pin, tone,duration=pduration)
+    
+    def Neo(self,RGB1,RGB2,RGB3):
+        """
+        takes in 3 value RGB value and displays that color on the neopixel
+        :return: None
+        """
+        self.pixels[0] = (RGB1,RGB2,RGB3)
+    
+    def GPS_Lat(self):
+        """
+        Returns the GPS Latitude readings
+        :return: Float
+        """
+        if self.hardware['GPS']:
+            self.gps.update()
+            if self.gps.has_fix:
+                return self.gps.latitude
+    
+    def GPS_Long(self):
+        """
+        Returns the GPS Latitude readings
+        :return: Float
+        """
+        if self.hardware['GPS']:
+            self.gps.update()
+            if self.gps.has_fix:
+                return self.gps.longitude
+    
+    def GPS_Alt(self):
+        """
+        Returns the GPS Latitude readings
+        :return: Float
+        """
+        if self.hardware['GPS']:
+            self.gps.update()
+            if self.gps.has_fix:
+                return self.gps.altitude_m
+    
+    def GPS_Sats(self):
+        """
+        Returns the GPS Latitude readings
+        :return: Float
+        """
+        if self.hardware['GPS']:
+            self.gps.update()
+            if self.gps.has_fix:
+                return self.gps.satellites
+            
+    def GPS_Speed(self):
+        if self.hardware['GPS']:
+            self.gps.update()
+            if self.gps.has_fix:
+                return self.gps.speed_knots
+    
+    def _format_datetime(self,datetime):
+        return "{:02}/{:02}/{} {:02}:{:02}:{:02}".format(
+            datetime.tm_mon,
+            datetime.tm_mday,
+            datetime.tm_year,
+            datetime.tm_hour,
+            datetime.tm_min,
+            datetime.tm_sec,
+    )
+    
+    def GPS_RTC(self):
+        """
+        Returns the GPS Latitude readings
+        :return: Float
+        """
+        if self.hardware['GPS']:
+            self.gps.update()
+            if self.gps.has_fix:
+                return self._format_datetime(self.the_rtc.datetime)
+
 
     def avionic_state(self, state):
         """
@@ -289,16 +467,78 @@ class BroncoStack:
         if 'Landed' in state:
             self.Avionics_State = 'Landed'
 
+    def get_avionic_state(self, state):
+        return state == self.Avionics_State
+    
+    """
     def activate_burn(self, port):
         """
+    """
         takes in burn port and activates inputted burn port
         (function needs to be actually written
         also needs to figure out timing for FETS )
         :param port: Port
         :return: None
         """
-        self.BurnPorts[port] = True
+    """
+        if port == 1:
+            self.Neo(255,0,0)
+            self.PYRO1.value = True
+            time.sleep(0.5)
+            self.PYRO1.value = False
+            self.Neo(0,128,0)
+        elif port == 2:
+            self.Neo(255,0,0)
+            self.PYRO2.value = True
+            time.sleep(0.5)
+            self.PYRO2.value = False
+            self.Neo(0,128,0)
+        elif port == 3:
+            self.Neo(255,0,0)
+            self.PYRO3.value = True
+            time.sleep(0.5)
+            self.PYRO3.value = False
+            self.Neo(0,128,0)
+        elif port == 4:
+            self.Neo(255,0,0)
+            self.PYRO4.value = True
+            time.sleep(0.5)
+            self.PYRO4.value = False
+            self.Neo(0,128,0)
+
         return
+    """
+    
+    def Continuity(self,port):
+        """
+        takes in port number and reads the continuity value at that port
+        and declares it open or closed
+        :param port: Port
+        :return: string
+
+        """
+        if port == 1:
+            if self.CONT1.value == 0:
+                return "open"
+            elif self.CONT1.value > 100:
+                return "closed"
+        if port == 2:
+            if self.CONT2.value == 0:
+                return "open"
+            elif self.CONT2.value > 100:
+                return "closed"
+        if port == 3:
+            if self.CONT3.value == 0:
+                return "open"
+            elif self.CONT3.value > 100:
+                return "closed"
+        if port == 4:
+            if self.CONT4.value == 0:
+                return "open"
+            elif self.CONT4.value > 100:
+                return "closed"
+
+
 
 
 pancake = BroncoStack()

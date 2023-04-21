@@ -1,3 +1,10 @@
 from Flight.Pancake import pancake
+import Flight.flightData as data
+import time
 
-print(pancake.hardware)
+data.initialize()
+
+data.write()
+
+data.read()
+    
