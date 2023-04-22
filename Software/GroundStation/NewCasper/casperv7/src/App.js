@@ -1,4 +1,5 @@
 import './App.css';
+import { useState, useEffect } from "react";
 import Timer from './components/Timer.jsx'
 import Status from './components/Status.jsx'
 import Dashboard from './components/Dashboard.jsx';
@@ -6,6 +7,20 @@ import PyroChannel from './components/PyroChannel.jsx';
 import ProgressBar from './components/ProgressBar.jsx';
 
 function App() {
+
+  const URL = 'https://www.randomnumberapi.com/api/v1.0/random?min=00&max=99&count=1';
+  const [results, setResults] = useState([]);
+  
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch(URL);
+      const data = await response.json();
+      setResults(data);
+    }
+
+    getData();
+  });
+
   return (
     <div className="App">
       <div className="first-column">
@@ -24,7 +39,7 @@ function App() {
         <div className="header">
           <div id="title">Casper Vehicle Launch</div>
           <div id="timer-title">Mission Elapsed Timer</div>
-          <Timer id="timer" hours="00" minute="00" seconds="00"></Timer>
+          <Timer id="timer" hours="00" minute="00" seconds={results}></Timer>
         </div>
         <div className="body">
           <div className="body-first-row">

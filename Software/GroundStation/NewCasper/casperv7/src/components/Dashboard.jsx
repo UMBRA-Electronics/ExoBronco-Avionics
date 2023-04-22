@@ -3,11 +3,8 @@ import './Dashboard.css'
 import Speedometer, {
     Background,
     Arc,
-    Needle,
     Progress,
     Marks,
-    Indicator,
-    DangerPath
   } from 'react-speedometer';
 
 
