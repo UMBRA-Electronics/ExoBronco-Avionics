@@ -8,7 +8,7 @@ import ProgressBar from './components/ProgressBar.jsx';
 
 function App() {
 
-  const URL = 'https://www.randomnumberapi.com/api/v1.0/random?min=00&max=99&count=1';
+  const URL = 'https://www.randomnumberapi.com/api/v1.0/random?min=00&max=20&count=1';
   const [results, setResults] = useState([]);
   
   useEffect(() => {
@@ -39,12 +39,12 @@ function App() {
         <div className="header">
           <div id="title">Casper Vehicle Launch</div>
           <div id="timer-title">Mission Elapsed Timer</div>
-          <Timer id="timer" hours="00" minute="00" seconds={results}></Timer>
+          <Timer id="timer" hours="00" minute="00" seconds="00"></Timer>
         </div>
         <div className="body">
           <div className="body-first-row">
-            <Dashboard value={2.69} max={20} color="green" type="VELOCITY" units="ft/s" width={150} class="dashboard"></Dashboard>
-            <Dashboard value={30} max={40} color="orange" type="ACCELERATION" units="ft/s^2" width={150}></Dashboard>
+            <Dashboard value={results} max={20} color="green" type="BNO ACCELERATION" units="ft/s" width={150} class="dashboard"></Dashboard>
+            <Dashboard value={30} max={40} color="orange" type="ADXL ACCELERATION" units="ft/s^2" width={150}></Dashboard>
             <Dashboard value={14.00} max={40} color="red" type="ALTITUDE" units="ft" width={150}></Dashboard>
             <Dashboard value={.07} max={.5} color="cyan" type="Pressure" units="psi" width={150}></Dashboard>
           </div>
@@ -52,7 +52,7 @@ function App() {
             <Dashboard value={26.53} max={50} color="cyan" type="PITCH" units="Degrees" width={125}></Dashboard>
             <Dashboard value={20} max={50} color="cyan" type="YAW" units="Degrees" width={125}></Dashboard>
             <Dashboard value={0} max={40} color="cyan" type="PITCH GYRO" units="Degrees/s" width={125}></Dashboard>
-            <Dashboard value={.07} max={.5} color="cyan" type="ALTITUDE" units="Degrees/s" width={125}></Dashboard>
+            <Dashboard value={.07} max={.5} color="cyan" type="YAW GYRO" units="Degrees/s" width={125}></Dashboard>
           </div>
         </div>
         <div className="foot">
@@ -62,9 +62,9 @@ function App() {
             <div className='progress-container'>
               <div className='line-title'>RSSI</div>
               <ProgressBar bgcolor="cyan" completed={-2} units="dbm" min={-5} max={0}></ProgressBar>
-              <div className='line-title'>BMP390 Temperature</div>
-              <ProgressBar bgcolor="cyan" completed={14.0} units="°F" min={0} max={100}></ProgressBar>
-              <div className='line-title'>MS8607 Temperature</div>
+              <div className='line-title'>Warning Flags</div>
+              <ProgressBar bgcolor="cyan" completed={12} units="°F" min={0} max={100}></ProgressBar>
+              <div className='line-title'>Temperature</div>
               <ProgressBar bgcolor="cyan" completed={14.5} units="°F" min={0} max={100}></ProgressBar>
               <div className='line-title'>VBATT</div>
               <ProgressBar bgcolor="cyan" completed={14.7} units="V" min={0} max={30}></ProgressBar>
