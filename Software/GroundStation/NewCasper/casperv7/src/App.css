@@ -10,6 +10,14 @@ html,body {
   margin-bottom: 1%;
 }
 
+#packet-number {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: white;
+  font-size: .8em;
+}
+
 .App {
   height: 95vh;
   display: flex;

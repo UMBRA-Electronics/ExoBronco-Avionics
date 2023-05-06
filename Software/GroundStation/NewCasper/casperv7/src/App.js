@@ -23,17 +23,18 @@ function App() {
 
   return (
     <div className="App">
+      <div id="packet-number">Packet Number: {69}</div>
       <div className="first-column">
-        <Status name="COMMISIONING" status="Normal"></Status>
-        <Status name="ON PAD" status="Normal"></Status>
-        <Status name="MOTOR 1 BURN" status="Abort"></Status>
-        <Status name="COAST 1" status="Normal"></Status>
-        <Status name="MOTOR 2 IGNITION" status="Abort"></Status>
-        <Status name="MOTOR 2 BURN" status="Abort"></Status>
-        <Status name="COAST 2" status="Normal"></Status>
-        <Status name="DROGUE DEPLOYMENT" status="Waiting"></Status>
-        <Status name="MAIN DEPLOYMENT" status="Waiting"></Status>
-        <Status name="LANDED" status="Waiting"></Status>
+        <Status name="COMMISIONING" status={1}></Status>
+        <Status name="ON PAD" status={1}></Status>
+        <Status name="MOTOR 1 BURN" status={1}></Status>
+        <Status name="COAST 1" status={1}></Status>
+        <Status name="MOTOR 2 IGNITION" status={2}></Status>
+        <Status name="MOTOR 2 BURN" status={2}></Status>
+        <Status name="COAST 2" status={1}></Status>
+        <Status name="DROGUE DEPLOYMENT" status={0}></Status>
+        <Status name="MAIN DEPLOYMENT" status={0}></Status>
+        <Status name="LANDED" status={0}></Status>
       </div>
       <div className="second-column">
         <div className="header">
@@ -74,10 +75,10 @@ function App() {
             <div id="connections">Connections</div>
             <hr id="lineheader"></hr>
             <div className="pyro-container">
-              <PyroChannel number='1' status="Connected"></PyroChannel>
-              <PyroChannel number='2' status="Connected"></PyroChannel>
-              <PyroChannel number='3' status="Connected"></PyroChannel>
-              <PyroChannel number='4' status="Connected"></PyroChannel>
+              <PyroChannel number='1' status={0}></PyroChannel>
+              <PyroChannel number='2' status={0}></PyroChannel>
+              <PyroChannel number='3' status={1}></PyroChannel>
+              <PyroChannel number='4' status={1}></PyroChannel>
             </div>
           </div>
         </div>
