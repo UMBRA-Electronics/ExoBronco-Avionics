@@ -10,11 +10,13 @@ import Speedometer, {
 
 
 const Dashboard = (Props) => {
-    let actualValue = Props.value;
-    let actualMax = Props.max;
-    let valueOf1000 = actualValue/actualMax * 1000;
+    let actualValue = Props.value; //Value being currently recieved
+    let actualMax = Props.range; //The range of possible numbers, not actual max but actual max can be found doing actualMin + actualMax
+    let actualMin = Props.min; //The minimum value it could be
+    let valueToZero = actualValue - actualMin; //Minimum should now be zero
+    let valueOf1000 = valueToZero/actualMax * 1000; //Scale adjusted to fit 1000
     return (
-            <div className="dashboard" >
+            <div className="dashboard">
                 <Speedometer value={valueOf1000} max={1000} fontFamily='squada-one' accentColor={Props.color} width={Props.width}>
                     <Background opacity={0}/>
                     <Arc arcWidth={1} color={Props.color}/>
@@ -23,7 +25,7 @@ const Dashboard = (Props) => {
                 </Speedometer>
                 <div className='title'>
                     <div id="type">{Props.type}</div>
-                    <div id="value">{Props.value}</div>
+                    <div id="value">{actualValue}</div>
                     <div id="units">{Props.units}</div>
                 </div>
             </div>
